@@ -8,7 +8,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="License: MIT"/></a>
   <a href="https://www.npmjs.com/package/@evoclock/pi-typesafe-secure"><img src="https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=npm" alt="pi-typesafe-secure on npm"/></a>
   <a href="https://www.npmjs.com/package/@evoclock/redaction"><img src="https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=npm" alt="redaction on npm"/></a>
-  <img src="https://img.shields.io/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript"/>
 </p>
 
 One repository, **two npm packages**. This README covers both; they version independently.
@@ -27,7 +27,7 @@ The two packages and their versioning:
 | Package | Version | What it is |
 |---|---|---|
 | `@evoclock/pi-typesafe-secure` | [![npm](https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=version)](https://www.npmjs.com/package/@evoclock/pi-typesafe-secure) | The Pi package: the hardened skill plus a bundled copy of the library. Bumps for any change to the skill, the docs, or the bundled library. |
-| `@evoclock/redaction` | **0.1.0** (stable; bumps only with library code changes) | The redaction library itself. Pure, dependency-free TypeScript. |
+| `@evoclock/redaction` | [![npm](https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=version)](https://www.npmjs.com/package/@evoclock/redaction) — stable; bumps only with library code changes | The redaction library itself. Pure, dependency-free TypeScript. |
 
 If the two versions look out of step, that is the intended versioning, not staleness: the library sits at 0.1.0 and stays there unless its code changes, while the Pi package keeps tracking npm. Install `@evoclock/redaction` to track the library version; install `@evoclock/pi-typesafe-secure` to get the library version the package was built with.
 
