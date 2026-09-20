@@ -26,8 +26,8 @@ The two packages and their versioning:
 
 | Package | Version | What it is |
 |---|---|---|
-| `@evoclock/pi-typesafe-secure` | [![npm](https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=version)](https://www.npmjs.com/package/@evoclock/pi-typesafe-secure) | The Pi package: the hardened skill plus a bundled copy of the library. Bumps for any change to the skill, the docs, or the bundled library. |
-| `@evoclock/redaction` | [![npm](https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=version)](https://www.npmjs.com/package/@evoclock/redaction) — stable; bumps only with library code changes | The redaction library itself. Pure, dependency-free TypeScript. |
+| `@evoclock/pi-typesafe-secure` | [![npm](https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=npm)](https://www.npmjs.com/package/@evoclock/pi-typesafe-secure) | The Pi package: the hardened skill plus a bundled copy of the library. Bumps for any change to the skill, the docs, or the bundled library. |
+| `@evoclock/redaction` | [![npm](https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=npm)](https://www.npmjs.com/package/@evoclock/redaction) | The redaction library itself. Pure, dependency-free TypeScript. Stable at 0.1.0; bumps only with library code changes. |
 
 If the two versions look out of step, that is the intended versioning, not staleness: the library sits at 0.1.0 and stays there unless its code changes, while the Pi package keeps tracking npm. Install `@evoclock/redaction` to track the library version; install `@evoclock/pi-typesafe-secure` to get the library version the package was built with.
 
