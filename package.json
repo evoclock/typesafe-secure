@@ -1,0 +1,46 @@
+{
+  "name": "@evoclock/pi-typesafe-secure",
+  "version": "0.1.0",
+  "description": "Hardened TypeSafe skill and shared redaction library for Pi.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "pi-package",
+    "pi-skill",
+    "pi",
+    "pi-coding-agent",
+    "typesafe",
+    "typesafe-ai",
+    "redaction",
+    "credential-hygiene",
+    "security",
+    "privacy",
+    "prompt-injection",
+    "developer-tools"
+  ],
+  "files": [
+    "skills/typesafe-secure/SKILL.md",
+    "lib/redaction/src",
+    "lib/redaction/package.json",
+    "lib/redaction/tsconfig.json",
+    "assets/Yamagane-origami.png",
+    "README.md",
+    "LICENSE",
+    "upstream/PROVENANCE.md",
+    "upstream/upstream-SKILL.md",
+    "upstream/upstream-LICENSE",
+    "upstream/upstream-REPO-LICENSE"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evoclock/typesafe-secure.git"
+  }
+}
