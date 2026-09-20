@@ -6,8 +6,8 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="License: MIT"/></a>
-  <a href="https://www.npmjs.com/package/@evoclock/pi-typesafe-secure"><img src="https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=pi-typesafe-secure" alt="pi-typesafe-secure on npm"/></a>
-  <a href="https://www.npmjs.com/package/@evoclock/redaction"><img src="https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=redaction" alt="redaction on npm"/></a>
+  <a href="https://www.npmjs.com/package/@evoclock/pi-typesafe-secure"><img src="https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=npm" alt="pi-typesafe-secure on npm"/></a>
+  <a href="https://www.npmjs.com/package/@evoclock/redaction"><img src="https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=npm" alt="redaction on npm"/></a>
   <img src="https://img.shields.io/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript"/>
 </p>
 
