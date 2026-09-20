@@ -1,24 +1,38 @@
-# pi-typesafe-secure v0.1.0
+# typesafe-secure
 
 <p align="center">
-  <img src="assets/Yamagane-origami.png" alt="pi-typesafe-secure, Yamagane origami mark" width="140"/>
+  <img src="assets/Yamagane-origami.png" alt="typesafe-secure, Yamagane origami mark" width="140"/>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="License: MIT"/></a>
-  <a href="https://www.npmjs.com/package/@evoclock/pi-typesafe-secure"><img src="https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat" alt="npm version"/></a>
-  <img src="https://img.shields.io/badge/version-0.1.0-blue?style=flat" alt="Version 0.9.1"/>
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <a href="https://www.npmjs.com/package/@evoclock/pi-typesafe-secure"><img src="https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=pi-typesafe-secure" alt="npm version of pi-typesafe-secure"/></a>
+  <a href="https://www.npmjs.com/package/@evoclock/redaction"><img src="https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=redaction" alt="npm version of redaction"/></a>
+  <img src="https://img.shields.io/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript"/>
 </p>
 
-A Pi package: a hardened `typesafe-ai` skill plus a redaction library, in one install.
+One repository, **two npm packages**. This README covers both; they version independently.
+
+- **`@evoclock/pi-typesafe-secure`** — the Pi package: a hardened `typesafe-ai` skill plus a redaction library, in one install.
+- **`@evoclock/redaction`** — the redaction library on its own, for any Node >= 20 project.
+
+If you came from npm: the title above is the **repository** name. It is deliberately version-free — check the badge row for each package's current version. `pi-typesafe-secure v0.1.0` in a title would describe only one of the two things published here, so the README no longer pins one.
 
 **This is NOT DLP.** This project is not a data-loss-prevention product. It does not discover or inventory sensitive data across an organization, does not scan storage or network traffic, and makes no claim of comprehensive sensitive-data discovery. It is a redaction library: it replaces well-formed sensitive values (API keys, tokens, credentials, emails) in the data you explicitly pass to it with typed `[REDACTED:*]` markers. Use it as one bounded layer in your own security design, never as a substitute for a real DLP program.
 
 ## What's inside
 
+The two packages and their versioning:
+
+| Package | Version | What it is |
+|---|---|---|
+| `@evoclock/pi-typesafe-secure` | [![npm](https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=version)](https://www.npmjs.com/package/@evoclock/pi-typesafe-secure) | The Pi package: the hardened skill plus a bundled copy of the library. Bumps for any change to the skill, the docs, or the bundled library. |
+| `@evoclock/redaction` | [![npm](https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=version)](https://www.npmjs.com/package/@evoclock/redaction) | The redaction library itself. Pure, dependency-free TypeScript. Its version only moves when the library code changes — doc-only releases of the outer package leave it untouched. |
+
+If the two versions look out of step, that is the intended versioning, not staleness. The library's version only moves when library code changes; doc-only releases bump the Pi package alone. Install `@evoclock/redaction` to track the library version; install `@evoclock/pi-typesafe-secure` to get the library version the package was built with.
+
 1. **The `typesafe-secure` skill** (`skills/typesafe-secure/SKILL.md`): a hardened, locally owned derivative of TypeSafe's MIT-licensed agent skill, covering credential hygiene, privacy redaction before external calls, prompt-injection resistance, and explicit failure semantics.
-2. **`lib/redaction`**: the shared redaction library. Pure, dependency-free TypeScript, also installable standalone from npm as `@evoclock/redaction`.
+2. **`lib/redaction`**: the shared redaction library (the `@evoclock/redaction` package above), bundled into this package by its `files` manifest.
 
 ## Install (Pi)
 
@@ -28,10 +42,10 @@ From npm:
 pi install npm:@evoclock/pi-typesafe-secure
 ```
 
-Or from Git at a pinned tag:
+Or from Git at a pinned tag (check the tags for the current release):
 
 ```sh
-pi install git:github.com/evoclock/typesafe-secure@v0.1.0
+pi install git:github.com/evoclock/typesafe-secure@v0.1.2
 ```
 
 Pi pins the ref and reconciles it on `pi update --extensions`.
