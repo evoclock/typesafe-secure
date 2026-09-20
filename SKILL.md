@@ -43,7 +43,12 @@ of truth** — read them as part of the task.
   data, or proprietary material to the service merely to test. Minimize and
   redact state before external calls; keep exact evidence local when auditability
   matters. Typed output does not make unsafe input safe — redaction happens
-  before the request, not after.
+  before the request, not after. When redaction tooling is needed, use this
+  repository's shared module `lib/redaction/` (`redactValue` for state trees,
+  `redactString` for text; `containsSensitive`/`redactionTypes` for pre-send
+  screening) rather than improvised per-task regexes, when the module is
+  available in this repository; when working outside this repository, no such
+  module is implied and local policy applies.
 - **Credentials:** never place API keys in source code, Git, shell commands,
   agent prompts, or transcripts. Never print keys. See Credential handling below.
 - **Failure semantics:** a low probability is a *valid judgment*; a timeout,
