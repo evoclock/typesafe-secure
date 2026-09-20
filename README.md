@@ -16,7 +16,7 @@ One repository, **two npm packages**. This README covers both; they version inde
 - **`@evoclock/pi-typesafe-secure`** — the Pi package: a hardened `typesafe-ai` skill plus a redaction library, in one install.
 - **`@evoclock/redaction`** — the redaction library on its own, for any Node >= 20 project.
 
-If you came from npm: the title above is the **repository** name. It is deliberately version-free — check the badge row for each package's current version. `pi-typesafe-secure v0.1.0` in a title would describe only one of the two things published here, so the README no longer pins one.
+If you came from npm: the title above is the **repository** name. It is deliberately version-free — check the badge row for each package's current version. A version in the title would describe only one of the two things published here, so the README pins none.
 
 **This is NOT DLP.** This project is not a data-loss-prevention product. It does not discover or inventory sensitive data across an organization, does not scan storage or network traffic, and makes no claim of comprehensive sensitive-data discovery. It is a redaction library: it replaces well-formed sensitive values (API keys, tokens, credentials, emails) in the data you explicitly pass to it with typed `[REDACTED:*]` markers. Use it as one bounded layer in your own security design, never as a substitute for a real DLP program.
 
