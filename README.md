@@ -29,6 +29,22 @@ pi install git:github.com/evoclock/typesafe-secure@v0.1.0
 
 Pi pins the ref and reconciles it on `pi update --extensions`.
 
+## Other agents and harnesses
+
+The library is a plain npm package and works in any Node >= 20 project:
+
+```sh
+npm install @typesafe-secure/redaction
+```
+
+The skill is a single Markdown file. To use it with any agent harness that reads `SKILL.md`-style instruction files, install the npm package and point your agent at the shipped skill file:
+
+```sh
+skills/typesafe-secure/SKILL.md
+```
+
+Install location varies by harness; consult your harness's documentation for where skill files belong.
+
 ## Use the library
 
 Standalone, from npm:
