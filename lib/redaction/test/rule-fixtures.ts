@@ -1,0 +1,170 @@
+// SPDX-License-Identifier: MIT
+// Shared synthetic rule fixtures. This module registers no tests.
+
+const A36 = "A".repeat(36);
+
+/** [input, exact expected output] — pinned byte-for-byte (A5.1). */
+export const EXACT: readonly (readonly [string, string])[] = [
+  // 1 aws_access_key (full prefix family, 16 [A-Z0-9], case-sensitive)
+  ["AKIAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["ASIAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["A3TIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["AGPAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["AIDAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["AROAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["AIPAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["ANPAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["ANVAIOSFODNN7EXAMPLE", "[REDACTED:aws_access_key]"],
+  ["key AKIAIOSFODNN7EXAMPLE here", "key [REDACTED:aws_access_key] here"],
+  ["we ship from AKIA today", "we ship from AKIA today"],
+  ["AKIA123", "AKIA123"],
+  ["AGPA-v2 release", "AGPA-v2 release"],
+  ["akiaiosfodnn7example", "akiaiosfodnn7example"],
+  // 2-6 github tokens (>=36 token chars, word-bounded, case-sensitive)
+  [`ghp_${A36}`, "[REDACTED:github_pat_classic]"],
+  ["gho_" + "b".repeat(36), "[REDACTED:github_oauth_token]"],
+  ["ghu_" + "c".repeat(36), "[REDACTED:github_user_to_server]"],
+  ["ghs_" + "d".repeat(36), "[REDACTED:github_server_to_server]"],
+  ["github_pat_" + "e".repeat(82), "[REDACTED:github_pat_fine_grained]"],
+  ["ghp_", "ghp_"],
+  ["ghp_abc", "ghp_abc"],
+  ["github_pat_", "github_pat_"],
+  ["GHP_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "GHP_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
+  // 7 anthropic_key ordered BEFORE openai_key
+  ["sk-ant-" + "x".repeat(25), "[REDACTED:anthropic_key]"],
+  // 8 openai_key
+  ["sk-" + "y".repeat(25), "[REDACTED:openai_key]"],
+  ["sk-learn", "sk-learn"],
+  ["task-organization", "task-organization"],
+  ["Sk-ant-xxxxxxxxxxxxxxxxxxxxx", "Sk-ant-xxxxxxxxxxxxxxxxxxxxx"],
+  // 9 fireworks_key
+  ["fw_1234567890", "[REDACTED:fireworks_key]"],
+  ["fw_123456789", "fw_123456789"],
+  ["fw_", "fw_"],
+  // 10 google_api_key (AIza + 35, case-sensitive)
+  ["AIza" + "A".repeat(35), "[REDACTED:google_api_key]"],
+  ["AIza" + "A".repeat(34), "AIza" + "A".repeat(34)],
+  ["AIza in prose", "AIza in prose"],
+  ["aiza" + "A".repeat(35), "aiza" + "A".repeat(35)],
+  // 11 google_oauth_id (short digit prefix avoids the row-25 accepted FP)
+  [
+    "1234567890-abcdefghijklmnopqrstuvwwxx012345.apps.googleusercontent.com",
+    "[REDACTED:google_oauth_id]",
+  ],
+  ["apps.googleusercontent.com", "apps.googleusercontent.com"],
+  // 12/13 slack
+  ["xoxb-abcdefghijk", "[REDACTED:slack_token]"],
+  ["xoxp-123456789012", "[REDACTED:slack_token]"],
+  ["xoxo hugs and kisses", "xoxo hugs and kisses"],
+  ["xoxb-", "xoxb-"],
+  ["xapp-1234-abcdefgh-5678-deadbeef", "[REDACTED:slack_app_token]"],
+  ["xapp-1234-abcdefgh-5678", "xapp-1234-abcdefgh-5678"],
+  ["xapp prose without segments", "xapp prose without segments"],
+  // 14 stripe_key
+  ["sk_test_" + "z".repeat(30), "[REDACTED:stripe_key]"],
+  ["rk_live_" + "z".repeat(30), "[REDACTED:stripe_key]"],
+  ["sk_test", "sk_test"],
+  ["sk_test_short", "sk_test_short"],
+  // 15 firebase_domain (case-sensitive)
+  ["my-app.firebaseapp.com", "[REDACTED:firebase_domain]"],
+  ["console.firebase.google.com", "console.firebase.google.com"],
+  ["firebase.google.com", "firebase.google.com"],
+  ["MY-APP.firebaseapp.com", "MY-APP.firebaseapp.com"],
+  // 16 private_key_block (any label; unterminated header survives)
+  [
+    "-----BEGIN RSA PRIVATE KEY-----\nMIIBCgKCAQEA\n-----END RSA PRIVATE KEY-----",
+    "[REDACTED:private_key_block]",
+  ],
+  [
+    "-----BEGIN OPENSSH PRIVATE KEY-----\nabc\n-----END OPENSSH PRIVATE KEY-----",
+    "[REDACTED:private_key_block]",
+  ],
+  ["-----BEGIN PRIVATE KEY-----", "-----BEGIN PRIVATE KEY-----"],
+  // 17 jwt (three segments, >=10/>=10/>=5, word-bounded)
+  [
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2",
+    "[REDACTED:jwt]",
+  ],
+  ["eyJ alone", "eyJ alone"],
+  [
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0",
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0",
+  ],
+  // 18 bearer_authorization (case-insensitive; header context REQUIRED)
+  ["Authorization: Bearer abc123def456", "Authorization: [REDACTED:bearer_authorization]"],
+  ['authorization: "Bearer abc123def456"', "authorization: [REDACTED:bearer_authorization]"],
+  ["Proxy-Authorization: Bearer abc123def456", "Proxy-Authorization: [REDACTED:bearer_authorization]"],
+  ["X-API-Key: Bearer abc123def456", "X-API-Key: [REDACTED:bearer_authorization]"],
+  ["x-api-key:BEARER abc123def456", "x-api-key: [REDACTED:bearer_authorization]"],
+  ["the bearer of the ring", "the bearer of the ring"],
+  ["Bearer of good news", "Bearer of good news"],
+  ["Authorization: Bearer of the ring", "Authorization: Bearer of the ring"],
+  // 19 assigned_secret (keyword kept, separator normalized to ": ")
+  ["password: hunter2s3cret", "password: [REDACTED:assigned_secret]"],
+  ["PASSWORD = hunter2s3cret", "PASSWORD: [REDACTED:assigned_secret]"],
+  ['secret: "abcd"', "secret: [REDACTED:assigned_secret]"],
+  ["api-key=abcdefgh", "api-key: [REDACTED:assigned_secret]"],
+  ["API_KEY=abcdefgh", "API_KEY: [REDACTED:assigned_secret]"],
+  ["client_secret: abcdefgh00", "client_secret: [REDACTED:assigned_secret]"],
+  ["refresh_token: abcdefgh00", "refresh_token: [REDACTED:assigned_secret]"],
+  ["auth_token: abcdefgh00", "auth_token: [REDACTED:assigned_secret]"],
+  ["pwd=12345678", "pwd: [REDACTED:assigned_secret]"],
+  ["the secret to success is", "the secret to success is"],
+  ["token: 6", "token: 6"],
+  ["secret is: unknown phrasing", "secret is: unknown phrasing"],
+  ["tokenizer: enabled", "tokenizer: enabled"],
+  ["password_hint: none", "password_hint: none"],
+  // 20 json_credential (quoted-JSON shape; key and its quotes preserved,
+  // value's quotes dropped, marker OUTSIDE any quoting)
+  ['{"apiKey": "synthetic-value-1"}', '{"apiKey": [REDACTED:json_credential]}'],
+  ['{"accessToken": "synthetic-value-1"}', '{"accessToken": [REDACTED:json_credential]}'],
+  ['{"credentials": "synthetic-value-1"}', '{"credentials": [REDACTED:json_credential]}'],
+  ['{"api_key": null}', '{"api_key": null}'],
+  ['{"api_key_count": 3}', '{"api_key_count": 3}'],
+  ['{"keycount": "synthetic-value-1"}', '{"keycount": "synthetic-value-1"}'],
+  // 21 url_password (colon REQUIRED; extent ends at first / ? # whitespace)
+  ["https://user:pass@example.com/path?q=1", "https://[REDACTED:url_password]/path?q=1"],
+  ["http://user:pass@host.example.net", "http://[REDACTED:url_password]"],
+  ["https://user:pa:ss@host.example.net/x", "https://[REDACTED:url_password]/x"],
+  ["https://git@github.com/x", "https://git@github.com/x"],
+  ["http://localhost:8080", "http://localhost:8080"],
+  ["https://example.com/path", "https://example.com/path"],
+  ["https://example.com#frag", "https://example.com#frag"],
+  // 22 env_var_assignment (name preserved, value class excludes '[')
+  ["ANTHROPIC_API_KEY=sk-abc123", "ANTHROPIC_API_KEY=[REDACTED:env_var_assignment]"],
+  ["MERGE_GATEWAY_API_KEY=abc123def456", "MERGE_GATEWAY_API_KEY=[REDACTED:env_var_assignment]"],
+  ["MY_DB_PASSWORD=hunter2s3cret", "MY_DB_PASSWORD=[REDACTED:env_var_assignment]"],
+  ["_API_KEY=abc123", "_API_KEY=[REDACTED:env_var_assignment]"],
+  ["MY_API_KEY=abc123", "MY_API_KEY=[REDACTED:env_var_assignment]"],
+  ["MY_SECRET=abc123", "MY_SECRET=[REDACTED:env_var_assignment]"],
+  ["DB_PASSWORD=hunter2s3cret", "DB_PASSWORD=[REDACTED:env_var_assignment]"],
+  ["AUTHTOKEN=abc123", "AUTHTOKEN=abc123"],
+  ["MYTOKEN=abc123", "MYTOKEN=abc123"],
+  ["XSECRET=abc123", "XSECRET=abc123"],
+  ["MYDBPASSWORD=hunter2s3cret", "MYDBPASSWORD=hunter2s3cret"],
+  ["api_key_usage: daily", "api_key_usage: daily"],
+  ["API_KEY_USAGE=daily", "API_KEY_USAGE=daily"],
+  ["FETCH_TIMEOUT=30000", "FETCH_TIMEOUT=30000"],
+  ["timeout=30", "timeout=30"],
+  // 23 email (full address replaced; URL userinfo survives)
+  ["mail user@example.com now", "mail [REDACTED:email] now"],
+  ["USER@EXAMPLE.ORG", "[REDACTED:email]"],
+  ["name@example", "name@example"],
+  ["v1.0@edge", "v1.0@edge"],
+  ["user at example dot com", "user at example dot com"],
+  ["1.2.3@4.56", "1.2.3@4.56"],
+  // 24 ssn (word-bounded 3-2-4)
+  ["ssn 123-45-6789 filed", "ssn [REDACTED:ssn] filed"],
+  ["2026-09-19", "2026-09-19"],
+  ["1234-56-7890", "1234-56-7890"],
+  ["123456789", "123456789"],
+  // 25 credit_card: mask in place, separators/length preserved, NEVER a marker
+  ["4111 1111 1111 1111", "•••• •••• •••• ••••"],
+  ["4111111111111111", "••••••••••••••••"],
+  ["4111-1111-1111-1111", "••••-••••-••••-••••"],
+  ["0000 0000 0000 0000", "0000 0000 0000 0000"],
+  ["123456789012", "123456789012"],
+  ["123-456-7890", "123-456-7890"],
+  ["12345678901234567890", "12345678901234567890"],
+  ["1234 5678 9012 3456 7890", "1234 5678 9012 3456 7890"],
+];

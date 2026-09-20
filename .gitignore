@@ -1,0 +1,18 @@
+# Internal planning documents — never committed
+SPEC.md
+.private-planning/
+
+# Node
+node_modules/
+
+# macOS
+.DS_Store
+
+# Packaging artifacts
+*.tgz
+
+# TypeScript build output
+dist/
+
+# asgrep code-search index
+.asgrep/
