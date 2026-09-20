@@ -1,72 +1,40 @@
-# typesafe-secure
+# pi-typesafe-secure
 
-Structured redaction of sensitive values in application data, a TypeScript AI Jev library plus a hardened agent skill.
+<p align="center">
+  <img src="assets/Yamagane-origami.png" alt="pi-typesafe-secure, Yamagane origami mark" width="140"/>
+</p>
+
+A Pi package: a hardened `typesafe-ai` skill plus a redaction library, in one install.
 
 **This is NOT DLP.** This project is not a data-loss-prevention product. It does not discover or inventory sensitive data across an organization, does not scan storage or network traffic, and makes no claim of comprehensive sensitive-data discovery. It is a redaction library: it replaces well-formed sensitive values (API keys, tokens, credentials, emails) in the data you explicitly pass to it with typed `[REDACTED:*]` markers. Use it as one bounded layer in your own security design, never as a substitute for a real DLP program.
 
-The repo has two halves:
+## What's inside
 
-1. **`lib/redaction`**: the shared redaction library. Pure, dependency-free TypeScript.
-2. **The `typesafe-secure` skill**: a hardened, locally owned derivative of TypeSafe's MIT-licensed agent skill (`SKILL.md` at the repo root), covering credential hygiene, privacy redaction before external calls, prompt-injection resistance, and explicit failure semantics.
+1. **The `typesafe-secure` skill** (`skills/typesafe-secure/SKILL.md`): a hardened, locally owned derivative of TypeSafe's MIT-licensed agent skill, covering credential hygiene, privacy redaction before external calls, prompt-injection resistance, and explicit failure semantics.
+2. **`lib/redaction`**: the shared redaction library. Pure, dependency-free TypeScript, also installable standalone from npm as `@typesafe-secure/redaction`.
 
-## Why typed markers
+## Install (Pi)
 
-Every replacement is a typed marker such as `[REDACTED:openai_key]`, `[REDACTED:email]`, or `[REDACTED:json_credential]`, so downstream code and logs can tell *what kind* of value was removed, not reconstruct it. Markers are terminal: emitted marker text never re-matches any rule. Markers are **unauthenticated** and must not be treated as a trust signal; treat any `[REDACTED:*]` occurrence as "sensitive data was here," and handle it accordingly.
-
-The library is unconditional by construction: there is no disable knob, no environment toggle, no configuration that turns redaction off. It never throws on any input, including hostile getters and `Proxy` objects; unexpected failures fail closed. Copying is prototype-safe (`Object.create(null)` plus `defineProperty`), so prototype pollution cannot smuggle values through.
-
-## The library: `lib/redaction`
-
-- Typed `[REDACTED:*]` markers for every redaction class
-- Never-throw API on any input; hostile reads fail closed
-- Prototype-safe deep redaction with cycle and depth guards (`[REDACTED:cycle]`, `[REDACTED:depth_limit]`)
-- Sensitive-key drop for JSON-like structures (`[REDACTED:sensitive_key]`)
-- Zero runtime dependencies; TypeScript ESM; Node >= 20
-- Property-based and adversarial test suites
-
-## The skill: `typesafe-secure`
-
-`SKILL.md` at the repo root is a hardened derivative of the TypeSafe agent skill. It extends the upstream skill's semantic-judgment guidance with local security hardening: macOS Keychain-based credential hygiene, privacy redaction before any external call, prompt-injection resistance, bounded live-doc discovery, and explicit failure semantics. It is locally owned and modified from upstream; provenance is documented in [`upstream/PROVENANCE.md`](upstream/PROVENANCE.md).
-
-## Quick start
-
-### Install the skill (Pi)
-
-Clone the repo and symlink it into your Pi skills directory. `SKILL.md` at the repo root is the skill, so the whole clone is the install:
+From npm:
 
 ```sh
-git clone https://github.com/evoclock/typesafe-secure.git ~/.agents/skills/typesafe-secure
-ln -sfn ../../.agents/skills/typesafe-secure ~/.pi/skills/typesafe-secure
+pi install npm:@evoclock/pi-typesafe-secure
 ```
 
-(Adjust the paths if your Pi skills directory lives elsewhere; any directory containing `SKILL.md` works.)
-
-### Use the library
-
-The library ships in the same repo under `lib/redaction`. Set up, test, and typecheck it:
+Or from Git at a pinned tag:
 
 ```sh
-git clone https://github.com/evoclock/typesafe-secure.git
-cd typesafe-secure/lib/redaction
-npm install
-npm test
-npm run typecheck
+pi install git:github.com/evoclock/typesafe-secure@v0.1.0
 ```
 
-To consume it from another package without publishing, add a file dependency:
+Pi pins the ref and reconciles it on `pi update --extensions`.
+
+## Use the library
+
+Standalone, from npm:
 
 ```sh
-npm install @typesafe-secure/redaction@npm:@typesafe-secure/redaction@file:/absolute/path/to/typesafe-secure/lib/redaction
-```
-
-or, in `package.json`:
-
-```json
-{
-  "dependencies": {
-    "@typesafe-secure/redaction": "file:../typesafe-secure/lib/redaction"
-  }
-}
+npm install @typesafe-secure/redaction
 ```
 
 Minimal usage:
@@ -80,6 +48,12 @@ redactString("key sk-proj-AbCdEfGhIjKlMnOpQrStUvWx and a@b.com");
 redactValue({ api_key: "sk-1234567890abcdefghij", n: 1 });
 // => { api_key: "[REDACTED:sensitive_key]", n: 1 }
 ```
+
+## Why typed markers
+
+Every replacement is a typed marker such as `[REDACTED:openai_key]`, `[REDACTED:email]`, or `[REDACTED:json_credential]`, so downstream code and logs can tell *what kind* of value was removed, not reconstruct it. Markers are terminal: emitted marker text never re-matches any rule. Markers are **unauthenticated** and must not be treated as a trust signal; treat any `[REDACTED:*]` occurrence as "sensitive data was here," and handle it accordingly.
+
+The library is unconditional by construction: there is no disable knob, no environment toggle, no configuration that turns redaction off. It never throws on any input, including hostile getters and `Proxy` objects; unexpected failures fail closed. Copying is prototype-safe (`Object.create(null)` plus `defineProperty`), so prototype pollution cannot smuggle values through.
 
 ## Key handling (macOS Keychain)
 
@@ -120,6 +94,15 @@ security delete-generic-password -a <account> -s <service>
 ```
 
 If a key is ever exposed, rotate it at the provider immediately and delete the stale Keychain entry. Never paste a key value into a shell config, script, issue, or example; the Keychain lookup above is the only supported pattern.
+
+## Maintenance: upstream re-sync
+
+The skill is a pinned snapshot of the upstream TypeSafe skill. Upstream changes never alter this repo automatically; staying current is a deliberate ritual:
+
+1. Fetch the upstream repo and diff `65a39f39..HEAD` on their side.
+2. Review what changed; port anything relevant into the local derivative as an owner-approved, reviewed change.
+3. Update `upstream/PROVENANCE.md` pins (commit and SHA-256) only when upstream material is actually re-copied.
+4. Publish the new ref and update pinned installs.
 
 ## License
 
