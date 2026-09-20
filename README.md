@@ -30,11 +30,43 @@ The library is unconditional by construction: there is no disable knob, no envir
 
 ## Quick start
 
+### Install the skill (Pi)
+
+Clone the repo and symlink it into your Pi skills directory. `SKILL.md` at the repo root is the skill, so the whole clone is the install:
+
 ```sh
-cd lib/redaction
+git clone https://github.com/evoclock/typesafe-secure.git ~/.agents/skills/typesafe-secure
+ln -sfn ../../.agents/skills/typesafe-secure ~/.pi/skills/typesafe-secure
+```
+
+(Adjust the paths if your Pi skills directory lives elsewhere; any directory containing `SKILL.md` works.)
+
+### Use the library
+
+The library ships in the same repo under `lib/redaction`. Set up, test, and typecheck it:
+
+```sh
+git clone https://github.com/evoclock/typesafe-secure.git
+cd typesafe-secure/lib/redaction
 npm install
 npm test
 npm run typecheck
+```
+
+To consume it from another package without publishing, add a file dependency:
+
+```sh
+npm install @typesafe-secure/redaction@npm:@typesafe-secure/redaction@file:/absolute/path/to/typesafe-secure/lib/redaction
+```
+
+or, in `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@typesafe-secure/redaction": "file:../typesafe-secure/lib/redaction"
+  }
+}
 ```
 
 Minimal usage:
