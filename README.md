@@ -14,7 +14,7 @@
 One repository, **two npm packages**. This README covers both; they version independently.
 
 - **`@evoclock/pi-typesafe-secure`** — the Pi package: a hardened `typesafe-ai` skill plus a redaction library, in one install. Its badge tracks npm and changes with every release.
-- **`@evoclock/redaction`** — the redaction library on its own, for any Node >= 20 project. Stable at **0.1.0**: it only bumps when the library code changes, never for docs or packaging releases of the Pi package.
+- **`@evoclock/redaction`** — the redaction library on its own, for any Node >= 20 project. It only bumps when the library code changes, never for docs or packaging releases of the Pi package.
 
 Two badges, two versions, on purpose — the table below says which is which.
 
@@ -27,9 +27,9 @@ The two packages and their versioning:
 | Package | Version | What it is |
 |---|---|---|
 | `@evoclock/pi-typesafe-secure` | [![npm](https://img.shields.io/npm/v/@evoclock/pi-typesafe-secure?style=flat&label=npm)](https://www.npmjs.com/package/@evoclock/pi-typesafe-secure) | The Pi package: the hardened skill plus a bundled copy of the library. Bumps for any change to the skill, the docs, or the bundled library. |
-| `@evoclock/redaction` | [![npm](https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=npm)](https://www.npmjs.com/package/@evoclock/redaction) | The redaction library itself. Pure, dependency-free TypeScript. Stable at 0.1.0; bumps only with library code changes. |
+| `@evoclock/redaction` | [![npm](https://img.shields.io/npm/v/@evoclock/redaction?style=flat&label=npm)](https://www.npmjs.com/package/@evoclock/redaction) | The redaction library itself. Pure, dependency-free TypeScript. Bumps only with library code changes. |
 
-If the two versions look out of step, that is the intended versioning, not staleness: the library sits at 0.1.0 and stays there unless its code changes, while the Pi package keeps tracking npm. Install `@evoclock/redaction` to track the library version; install `@evoclock/pi-typesafe-secure` to get the library version the package was built with.
+If the two versions look out of step, that is the intended versioning, not staleness: the library only moves when its code changes, while the Pi package keeps tracking npm. Install `@evoclock/redaction` to track the library version; install `@evoclock/pi-typesafe-secure` to get the library version the package was built with.
 
 1. **The `typesafe-secure` skill** (`skills/typesafe-secure/SKILL.md`): a hardened, locally owned derivative of TypeSafe's MIT-licensed agent skill, covering credential hygiene, privacy redaction before external calls, prompt-injection resistance, and explicit failure semantics.
 2. **`lib/redaction`**: the shared redaction library (the `@evoclock/redaction` package above), bundled into this package by its `files` manifest.
