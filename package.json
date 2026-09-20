@@ -1,6 +1,6 @@
 {
   "name": "@evoclock/pi-typesafe-secure",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Hardened TypeSafe skill and shared redaction library for Pi.",
   "type": "module",
   "license": "MIT",
