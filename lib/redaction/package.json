@@ -1,5 +1,5 @@
 {
-  "name": "@typesafe-secure/redaction",
+  "name": "@evoclock/redaction",
   "version": "0.1.0",
   "description": "Pattern- and key-based minimization of recognized credential shapes before a trust boundary. NOT data-loss prevention (DLP).",
   "license": "MIT",

@@ -18,7 +18,7 @@ A Pi package: a hardened `typesafe-ai` skill plus a redaction library, in one in
 ## What's inside
 
 1. **The `typesafe-secure` skill** (`skills/typesafe-secure/SKILL.md`): a hardened, locally owned derivative of TypeSafe's MIT-licensed agent skill, covering credential hygiene, privacy redaction before external calls, prompt-injection resistance, and explicit failure semantics.
-2. **`lib/redaction`**: the shared redaction library. Pure, dependency-free TypeScript, also installable standalone from npm as `@typesafe-secure/redaction`.
+2. **`lib/redaction`**: the shared redaction library. Pure, dependency-free TypeScript, also installable standalone from npm as `@evoclock/redaction`.
 
 ## Install (Pi)
 
@@ -41,7 +41,7 @@ Pi pins the ref and reconciles it on `pi update --extensions`.
 The library is a plain npm package and works in any Node >= 20 project:
 
 ```sh
-npm install @typesafe-secure/redaction
+npm install @evoclock/redaction
 ```
 
 The skill is a single Markdown file. To use it with any agent harness that reads `SKILL.md`-style instruction files, install the npm package and point your agent at the shipped skill file:
@@ -57,13 +57,13 @@ Install location varies by harness; consult your harness's documentation for whe
 Standalone, from npm:
 
 ```sh
-npm install @typesafe-secure/redaction
+npm install @evoclock/redaction
 ```
 
 Minimal usage:
 
 ```ts
-import { redactString, redactValue } from "@typesafe-secure/redaction";
+import { redactString, redactValue } from "@evoclock/redaction";
 
 redactString("key sk-proj-AbCdEfGhIjKlMnOpQrStUvWx and a@b.com");
 // => 'key [REDACTED:openai_key] and [REDACTED:email]'
