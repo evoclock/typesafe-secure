@@ -42,10 +42,10 @@ From npm:
 pi install npm:@evoclock/pi-typesafe-secure
 ```
 
-Or from Git at a pinned tag (use the latest tag — see the badge row for the current version):
+Or from Git at the latest release tag (browse the repo's tags for the current one — the badge row shows the live npm version, which matches the latest tag):
 
 ```sh
-pi install git:github.com/evoclock/typesafe-secure@v0.1.2
+pi install git:github.com/evoclock/typesafe-secure@<latest-tag>
 ```
 
 Pi pins the ref and reconciles it on `pi update --extensions`.
