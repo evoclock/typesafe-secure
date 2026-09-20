@@ -60,6 +60,8 @@ Standalone, from npm:
 npm install @evoclock/redaction
 ```
 
+The library ships as TypeScript source and is imported through its package root (`@evoclock/redaction`); deep imports like `@evoclock/redaction/src/...` are not supported API. Run it with a TypeScript-aware loader (tsx, ts-node, a bundler, or Node.js type stripping) or compile it with your own build.
+
 Minimal usage:
 
 ```ts
