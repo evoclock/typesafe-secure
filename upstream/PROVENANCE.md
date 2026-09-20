@@ -8,4 +8,4 @@
 - Files preserved unchanged: upstream-SKILL.md, upstream-LICENSE, upstream-REPO-LICENSE
 - SHA-256 (upstream-SKILL.md): 71ea90d7906c6554c4f4c460ef7361b2d26f59116ccdae986dc6d997b9389f52
 - SHA-256 (upstream-LICENSE): 835f233f1d6ed84a9b9a351aba0689b47644a4137d6316911fc7957bde523b02
-- Derivative: draft skill `typesafe-secure` at /Users/julen/pi-dev-env/skills-draft/typesafe-secure/ (DRAFT ONLY — not installed into any active Pi skills directory)
+- Derivative: hardened skill `typesafe-secure` at SKILL.md (repo root) — locally owned derivative, modified from upstream; see the Attribution and Modifications section in SKILL.md
