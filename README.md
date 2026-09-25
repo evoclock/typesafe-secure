@@ -96,7 +96,7 @@ The library is unconditional by construction: there is no disable knob, no envir
 
 ## Key handling (macOS Keychain)
 
-The macOS Keychain is the source of truth for secrets in this project. Keys are never stored in shell configs, dotfiles, or the repository: the Keychain holds the value; shell configs only perform a runtime lookup.
+The macOS Keychain is the source of truth for secrets in this project. Keys are never stored in shell configs, dotfiles, or the repository: the Keychain holds the value, and each process reads it directly from the Keychain at the point of use. Exporting a key into a shell profile or the environment is not a supported pattern — redaction is not a substitute for preventing the secret from propagating in the first place.
 
 Provision a secret interactively (you will be prompted for the value; it is never typed on a command line or shown):
 
@@ -104,17 +104,7 @@ Provision a secret interactively (you will be prompted for the value; it is neve
 security add-generic-password -U -a <account> -s <service> -w
 ```
 
-Export it in a shell config via runtime lookup, never as a literal:
-
-```sh
-export KEY="$(/usr/bin/security find-generic-password -s 'Service' -a 'account' -w 2>/dev/null)"
-```
-
-After editing the shell config, load it explicitly:
-
-```sh
-source ~/.bashrc
-```
+A process that needs the secret reads it directly from the Keychain at the point of use, capturing the output in-process — never into a shell profile, an environment variable, or a file. This project defines no cross-platform store contract; macOS Keychain is the only store with an established contract here, so do not invent equivalent patterns for Linux, CI, or Windows without defining one first.
 
 Verify presence only; the value itself is discarded, never printed:
 
@@ -132,7 +122,7 @@ security add-generic-password -U -a <account> -s <service> -w
 security delete-generic-password -a <account> -s <service>
 ```
 
-If a key is ever exposed, rotate it at the provider immediately and delete the stale Keychain entry. Never paste a key value into a shell config, script, issue, or example; the Keychain lookup above is the only supported pattern.
+If a key is ever exposed, rotate it at the provider immediately and delete the stale Keychain entry. Never paste a key value into a shell config, script, issue, or example, and never export it into a shell profile or the environment; the direct Keychain read above is the only supported pattern.
 
 ## Maintenance: upstream re-sync
 
