@@ -59,21 +59,19 @@ of truth** — read them as part of the task.
 ## Credential handling
 
 - Direct TypeSafe API/SDK is the default; keys stay **server-side** in web apps.
-  Stateful services should read the credential directly from the OS keychain
-  where possible, rather than via shell export.
+  Stateful services read the credential directly from the OS keychain at the
+  point of use. Exporting it into a shell profile, an environment variable, or
+  any long-lived process environment is not a supported pattern: redaction is
+  not a substitute for preventing the secret from propagating in the first
+  place.
 - Store the key once, interactively (macOS Keychain — run exactly this; the
   prompt reads the secret without echoing it into history or transcripts):
   ```bash
   security add-generic-password -U -a typesafe-ai -s "Typesafe AI" -w
   ```
-- If a shell process needs the key, look it up in `~/.bashrc`:
-  ```bash
-  export TYPESAFE_API_KEY="$(/usr/bin/security find-generic-password -a 'typesafe-ai' -s 'Typesafe AI' -w 2>/dev/null)"
-  ```
-  then explicitly reload it in the current shell:
-  ```bash
-  source ~/.bashrc
-  ```
+- macOS Keychain is the only credential store with an established contract in
+  this skill. No cross-platform store contract is defined here; do not invent
+  equivalent store or export patterns for Linux, CI, or Windows without one.
   Never inline the secret into a command line.
 - Presence-only verification (all secret output redirected so the value is never shown):
   ```bash
@@ -209,7 +207,8 @@ https://github.com/typesafe-ai/skills (commit
 `65a39f393687675ce170e6094757de20370365b9`), MIT License, © 2026 TypeSafe AI —
 see [LICENSE](LICENSE). Modifications in this edition: added binding security
 boundaries (judgment-only scope, prompt-injection resistance, privacy
-redaction), macOS Keychain credential handling with presence-only verification,
+redaction), macOS Keychain credential handling with direct runtime reads and
+presence-only verification (no shell-profile export),
 gateway-transport caveat, API-version verification requirement, explicit
 failure semantics, bounded-docs rule, and adversarial-test guidance; upstream
 design guidance (System One / Choice / Noul / Score, live-doc discovery,
