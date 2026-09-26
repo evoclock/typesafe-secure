@@ -1,7 +1,7 @@
 # typesafe-secure
 
 <p align="center">
-  <img src="assets/Yamagane-origami.png" alt="typesafe-secure, Yamagane origami mark" width="140"/>
+  <img src="assets/grackle-logo-256.png" alt="typesafe-secure grackle mark" width="140"/>
 </p>
 
 <p align="center">
